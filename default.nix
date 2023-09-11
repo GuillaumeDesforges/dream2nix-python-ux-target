@@ -12,12 +12,12 @@
     projectRoot = ./.;
     projectRootFile = "pyproject.toml";
     packagesDir = "./nix";
-    # packagesList = [ "./package.nix" ];
     packageSets.nixpkgs = nixpkgs;
   };
 in
   packages.someproject
-  
+
+  # TODO
   # dream2nix.lib.importPackage {
   #   projectRoot = ./.;
   #   projectRootFile = "pyproject.toml";

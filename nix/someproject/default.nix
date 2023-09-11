@@ -2,27 +2,13 @@
 , config
 , lib
 , ...
-}:
-
-let
-  pyproject = builtins.fromTOML (builtins.readFile ../../pyproject.toml);
-in
-{
+}: {
   imports = [
     # TODO: pyproject module
-    dream2nix.modules.dream2nix.pip
+    dream2nix.modules.dream2nix.WIP-python-pyproject
   ];
 
   mkDerivation.src = ../..;
-  mkDerivation.buildInputs = [ config.deps.python.pkgs.setuptools ];
-  buildPythonPackage.format = "pyproject";
-
-  name = pyproject.project.name;
-  version = pyproject.project.version;
-
-  # TODO remove
-  pip.pypiSnapshotDate = "2050-01-01";
-  pip.requirementsList = [ "." ];
 
   pip.drvs.triton.env.pythonRemoveDeps = [
     "torch"
@@ -30,4 +16,6 @@ in
   pip.drvs.triton.mkDerivation.nativeBuildInputs = [
     config.deps.python.pkgs.pythonRelaxDepsHook
   ];
+  pip.drvs.torch.env.autoPatchelfIgnoreMissingDeps = ["libcuda.so.1"];
+  pip.drvs.torch.mkDerivation.dontStrip = true;
 }
