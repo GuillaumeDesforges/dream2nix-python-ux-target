@@ -8,7 +8,7 @@
     dream2nix.modules.dream2nix.WIP-python-pyproject
   ];
 
-  mkDerivation.src = ../..;
+  mkDerivation.src = ./.;
 
   pip.drvs.triton.env.pythonRemoveDeps = [
     "torch"

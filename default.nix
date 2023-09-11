@@ -8,22 +8,17 @@
   dream2nix = import dream2nixSource;
   nixpkgs = import dream2nix.inputs.nixpkgs {};
   # current pyproject project
-  packages = dream2nix.lib.importPackages {
-    projectRoot = ./.;
-    projectRootFile = "pyproject.toml";
-    packagesDir = "./nix";
+  settings = {
+    paths.projectRoot = ./.;
+    paths.projectRootFile = "pyproject.toml";
+    paths.package = ".";
+  };
+  package = dream2nix.lib.evalModules {
+    modules = [settings ./package.nix];
     packageSets.nixpkgs = nixpkgs;
   };
 in
-  packages.someproject
-
-  # TODO
-  # dream2nix.lib.importPackage {
-  #   projectRoot = ./.;
-  #   projectRootFile = "pyproject.toml";
-  #   packageFile = "./package.nix";
-  #   packageSets.nixpkgs = nixpkgs;
-  # };
+  package
 
   # TODO
   # nix run -f default.nix lock
