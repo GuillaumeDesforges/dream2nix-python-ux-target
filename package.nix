@@ -10,12 +10,10 @@
 
   mkDerivation.src = ./.;
 
-  pip.drvs.triton.env.pythonRemoveDeps = [
-    "torch"
+  deps = {nixpkgs, ...}: {
+    inherit (nixpkgs.cudaPackages) autoAddOpenGLRunpathHook;
+  };
+  pip.drvs.torch.mkDerivation.nativeBuildInputs = [
+    config.deps.autoAddOpenGLRunpathHook
   ];
-  pip.drvs.triton.mkDerivation.nativeBuildInputs = [
-    config.deps.python.pkgs.pythonRelaxDepsHook
-  ];
-  pip.drvs.torch.env.autoPatchelfIgnoreMissingDeps = ["libcuda.so.1"];
-  pip.drvs.torch.mkDerivation.dontStrip = true;
 }
