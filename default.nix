@@ -1,5 +1,5 @@
 { dream2nixSource ? builtins.fetchTarball {
-    url = "https://github.com/nix-community/dream2nix/tarball/main";
+    url = "https://github.com/nix-community/dream2nix/tarball/0d3146539a0c57cbe9c49b8d3b1852d04394cec6";
     # sha256 = "";
   }
 ,
@@ -9,9 +9,9 @@ let
   nixpkgs = import dream2nix.inputs.nixpkgs { };
   # current pyproject project
   settings = {
-    paths.projectRoot = "${./.}";
-    paths.projectRootFile = "${./pyproject.toml}";
-    paths.package = "${./.}";
+    paths.projectRoot = ./.;
+    paths.projectRootFile = "pyproject.toml";
+    paths.package = ".";
   };
   package = dream2nix.lib.evalModules {
     modules = [ settings ./package.nix ];
